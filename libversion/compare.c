@@ -144,10 +144,6 @@ static size_t get_next_version_component(const char** str, version_component_t* 
 	alpha = parse_alpha(str, &alphaflags, flags);
 	extranumber = parse_number(str);
 
-	/* skip remaining alphanumeric part */
-	while (is_version_char(**str))
-		++*str;
-
 	if (flags & VERSIONFLAG_ANY_IS_PATCH)
 		alphaflags = ALPHAFLAG_POSTRELEASE;
 
