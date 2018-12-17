@@ -308,6 +308,18 @@ int main() {
 	errors += version_test_symmetrical("1.0patch", "1.0", 1);
 	errors += version_test_symmetrical("1.0.patch", "1.0", 1);
 
+	fprintf(stderr, "\nTest group: multiple alphanumeric groups\n");
+	errors += version_test_symmetrical("8u141b15", "8u141b15", 0);
+	errors += version_test_symmetrical("8u141b15", "8u141b16", -1);
+	errors += version_test_symmetrical("8u141b15", "8u142b15", -1);
+	errors += version_test_symmetrical("8u141b15", "9u141b15", -1);
+	errors += version_test_symmetrical("8u141b15", "9u141b15", -1);
+
+	fprintf(stderr, "\nTest group: multiple alphanumeric groups cosistency w/prerelease keywords\n");
+	errors += version_test_symmetrical("8u141b15", "8u141b15alpha1", 1);
+	errors += version_test_symmetrical("8u141b15alpha1", "8u141b15beta1", -1);
+	errors += version_test_symmetrical("8u141b15beta1", "8u141b15rc1", -1);
+
 	if (errors) {
 		fprintf(stderr, "\n%d test(s) failed!\n", errors);
 		return 1;
