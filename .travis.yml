@@ -3,17 +3,23 @@ sudo: required
 dist: xenial
 matrix:
   include:
-    - compiler: gcc
+    - name: gcc + exttests
+      compiler: gcc
       env: EXTTESTS=yes
-    - compiler: gcc
+    - name: gcc + coverage
+      compiler: gcc
       env: CFLAGS="--coverage" LDFLAGS"=--coverage" COVERAGE=yes
-    - compiler: clang
+    - name: clang + exttests
+      compiler: clang
       env: EXTTESTS=yes
-    - compiler: clang
+    - name: clang + sanitizers
+      compiler: clang
       env: CFLAGS="-fsanitize=address,undefined,integer -fno-omit-frame-pointer -fno-sanitize-recover=all" LDFLAGS="-fsanitize=address,undefined,integer"
+    - name: gcc + exttests
+      compiler: gcc
+      arch: arm64
+      env: EXTTESTS=yes
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq gcc-multilib
   - if [ -n "${COVERAGE}" ]; then pip install --user pyyaml cpp-coveralls; fi
   - export CFLAGS="$CFLAGS -Werror -Wall -Wextra -pedantic"
   - export CXXFLAGS="$CFLAGS"
