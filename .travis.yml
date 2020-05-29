@@ -11,6 +11,18 @@ matrix:
       env: EXTTESTS=yes
     - compiler: clang
       env: CFLAGS="-fsanitize=address,undefined,integer -fno-omit-frame-pointer -fno-sanitize-recover=all" LDFLAGS="-fsanitize=address,undefined,integer"
+    - arch: arm64
+      compiler: gcc
+      env: EXTTESTS=yes
+    - arch: arm64
+      compiler: gcc
+      env: CFLAGS="--coverage" LDFLAGS"=--coverage" COVERAGE=yes
+    - arch: arm64
+      compiler: clang
+      env: EXTTESTS=yes
+    - arch: arm64
+      compiler: clang
+      env: CFLAGS="-fsanitize=address,undefined,integer -fno-omit-frame-pointer -fno-sanitize-recover=all" LDFLAGS="-fsanitize=address,undefined,integer"
 before_install:
   - if [ -n "${COVERAGE}" ]; then pip install --user pyyaml cpp-coveralls; fi
   - export CFLAGS="$CFLAGS -Werror -Wall -Wextra -pedantic"
